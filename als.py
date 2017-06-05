@@ -46,6 +46,7 @@ class AlsGui(QtWidgets.QWidget):
 
         # Init variables
         self.currentIrLevel = 0
+        self.dataIr = []
         self.dataAls = []
 
         # Init figure
