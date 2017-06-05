@@ -6,7 +6,7 @@ from matplotlib.backends.backend_qt5agg import FigureCanvasQTAgg as FigureCanvas
 from matplotlib.figure import Figure
 
 
-class MatplotlibWidget(QtWidgets.QWidget):
+class MatplotlibWidget(FigureCanvas):
     """
     Implements a Matplotlib figure inside a QWidget.
     Use getFigure() and redraw() to interact with matplotlib.
@@ -19,13 +19,13 @@ class MatplotlibWidget(QtWidgets.QWidget):
         mw.draw()
     """
 
-    def __init__(self, width=4.0, height=3.0, dpi=100):
-        QtWidgets.QWidget.__init__(self)
-        self.figure = Figure(figsize=(4.0, 3.0), dpi=100)
-        self.canvas = FigureCanvas(self.figure)
-        self.canvas.setParent(self)
+    def __init__(self, parent=None, width=10, height=10, dpi=100):
+        self.figure = Figure(figsize=(10, 10), dpi=100)
 
-    def draw(self):
-        self.canvas.draw()
+        FigureCanvas.__init__(self, self.figure)
+        self.setParent(parent)
+        FigureCanvas.setSizePolicy(self, QtWidgets.QSizePolicy.Expanding,
+                                   QtWidgets.QSizePolicy.Expanding)
+        FigureCanvas.updateGeometry(self)
 
 

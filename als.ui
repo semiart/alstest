@@ -14,6 +14,19 @@
    <string>ALS Test Gui</string>
   </property>
   <layout class="QGridLayout" name="gridLayout">
+   <item row="0" column="0">
+    <widget class="QLabel" name="lblIrLevel">
+     <property name="text">
+      <string>Max IR Level 0</string>
+     </property>
+    </widget>
+   </item>
+   <item row="5" column="0" colspan="4">
+    <widget class="MatplotlibWidget" name="pltALSReading"/>
+   </item>
+   <item row="1" column="1">
+    <widget class="QSpinBox" name="sbxIrRampInterval"/>
+   </item>
    <item row="1" column="0">
     <widget class="QLabel" name="lblIrRampInterval">
      <property name="text">
@@ -21,10 +34,20 @@
      </property>
     </widget>
    </item>
-   <item row="0" column="0">
-    <widget class="QLabel" name="lblIrLevel">
+   <item row="0" column="1" colspan="3">
+    <widget class="QSlider" name="sldIrLevel">
+     <property name="orientation">
+      <enum>Qt::Horizontal</enum>
+     </property>
+    </widget>
+   </item>
+   <item row="3" column="1">
+    <widget class="QSpinBox" name="sbxSamplingInterval"/>
+   </item>
+   <item row="7" column="0">
+    <widget class="QLabel" name="lblAlsLevel">
      <property name="text">
-      <string>Max IR Level 0</string>
+      <string>ALS Level</string>
      </property>
     </widget>
    </item>
@@ -49,32 +72,16 @@
     </widget>
    </item>
    <item row="3" column="3">
+    <widget class="QPushButton" name="btnSave">
+     <property name="text">
+      <string>Save</string>
+     </property>
+    </widget>
+   </item>
+   <item row="1" column="3">
     <widget class="QPushButton" name="btnConnect">
      <property name="text">
       <string>Connect</string>
-     </property>
-    </widget>
-   </item>
-   <item row="5" column="0" colspan="4">
-    <widget class="MatplotlibWidget" name="pltALSReading"/>
-   </item>
-   <item row="1" column="1">
-    <widget class="QSpinBox" name="sbxIrRampInterval"/>
-   </item>
-   <item row="3" column="1">
-    <widget class="QSpinBox" name="sbxSamplingInterval"/>
-   </item>
-   <item row="0" column="1" colspan="3">
-    <widget class="QSlider" name="sldIrLevel">
-     <property name="orientation">
-      <enum>Qt::Horizontal</enum>
-     </property>
-    </widget>
-   </item>
-   <item row="7" column="0">
-    <widget class="QLabel" name="lblAlsLevel">
-     <property name="text">
-      <string>ALS Level</string>
      </property>
     </widget>
    </item>

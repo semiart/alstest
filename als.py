@@ -46,9 +46,18 @@ class AlsGui(QtWidgets.QWidget):
 
         # Init variables
         self.currentIrLevel = 0
+        self.dataAls = []
+
+        # Init figure
+        self.ax = self.ui.pltALSReading.figure.add_subplot(1,1,1)
+        self.ax.set_xlabel('IR Level')
+        self.ax.set_ylabel('ALS Reading')
+        self.ax.set_xlim(0, 100)
+        self.ax.set_ylim(0, 0x7ff)
 
         # Connect signals and slots
         self.ui.btnConnect.clicked.connect(self.btnConnectClicked)
+        self.ui.btnSave.clicked.connect(self.btnSaveClicked)
         self.ui.sldIrLevel.valueChanged.connect(self.sldIrLevelValueChanged)
         self.timerUpdatePrgbar.timeout.connect(self.updatePrgbar)
         self.timerReadAls.timeout.connect(self.readAls)
@@ -57,6 +66,12 @@ class AlsGui(QtWidgets.QWidget):
         self.ui.sbxSamplingInterval.valueChanged.connect(self.sbxSamplingIntervalValueChanged)
 
         self.show()
+
+    def btnSaveClicked(self):
+        self.logfile = open(time.strftime('%d-%b-%y-%H-%M-%S', time.localtime()) + '.log', 'w')
+        for i in range(len(self.dataAls)):
+            self.logfile.write(str(time.time()) + ' ' + str(self.dataIr[i]) + ' ' + str(self.dataIr[i]) + '\n')
+        self.logfile.close()
         
     def btnConnectClicked(self):
         if(self.tn.connected):
@@ -65,8 +80,6 @@ class AlsGui(QtWidgets.QWidget):
             self.timerUpdateIrLevel.stop()
             self.tn.disconnect()
             self.ui.btnConnect.setText('Connect')
-            if(self.logfile is not None):
-                self.logfile.close()
         else:
             self.tn.connect()
             if(self.tn.connected):
@@ -75,8 +88,7 @@ class AlsGui(QtWidgets.QWidget):
                 if(self.ui.sbxIrRampInterval.value()):
                     self.timerUpdateIrLevel.start()
                 self.ui.btnConnect.setText('Disconnect')
-                self.logfile = open(time.strftime('%d-%b-%y-%H-%M-%S', time.localtime() + '.log', 'w'))
-                self.logfile = open(time.strftime('%d-%b-%y-%H-%M-%S', time.localtime()) + '.log', 'w')
+
             else:
                 msg = QtWidgets.QMessageBox()
                 msg.setText('Open Telnet Failed')
@@ -91,10 +103,14 @@ class AlsGui(QtWidgets.QWidget):
     def updatePrgbar(self):
         self.ui.prgAlsLevel.setValue(self.tn.alsLastReading)
         self.ui.lblAlsLevel.setText('ALS Level: ' + str(hex(self.tn.alsLastReading)))
+        if self.dataAls is not None and self.dataIr is not None:
+            self.ax.plot(self.dataIr, self.dataAls, 'r+')
+            self.ui.pltALSReading.draw()
 
     def readAls(self):
         self.tn.readAlsLevel()
-        self.logfile.write(str(time.time()) + ' ' + str(self.tn.alsLastReading) + ' ' + str(self.currentIrLevel * 10) + '\n')
+        self.dataAls.append(self.tn.alsLastReading)
+        self.dataIr.append(self.currentIrLevel * 10)
 
     def updateIrLevel(self):
         self.tn.setIrLevel(self.currentIrLevel)
