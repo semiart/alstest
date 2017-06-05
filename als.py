@@ -76,6 +76,7 @@ class AlsGui(QtWidgets.QWidget):
                     self.timerUpdateIrLevel.start()
                 self.ui.btnConnect.setText('Disconnect')
                 self.logfile = open(time.strftime('%d-%b-%y-%H-%M-%S', time.localtime() + '.log', 'w'))
+                self.logfile = open(time.strftime('%d-%b-%y-%H-%M-%S', time.localtime()) + '.log', 'w')
             else:
                 msg = QtWidgets.QMessageBox()
                 msg.setText('Open Telnet Failed')
