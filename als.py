@@ -53,8 +53,9 @@ class AlsGui(QtWidgets.QWidget):
         self.ax = self.ui.pltALSReading.figure.add_subplot(1,1,1)
         self.ax.set_xlabel('IR Level')
         self.ax.set_ylabel('ALS Reading')
-        self.ax.set_xlim(0, 100)
+        self.ax.set_xlim(-10, 110)
         self.ax.set_ylim(0, 0x7ff)
+        self.ax.grid(color='b', linestyle='dotted', linewidth='1')
 
         # Connect signals and slots
         self.ui.btnConnect.clicked.connect(self.btnConnectClicked)
@@ -99,6 +100,7 @@ class AlsGui(QtWidgets.QWidget):
     def sldIrLevelValueChanged(self):
         self.ui.lblIrLevel.setText('Max IR Level ' + str(self.ui.sldIrLevel.value() * 10))
         if(self.tn.connected and self.ui.sbxIrRampInterval.value() == 0):
+            self.currentIrLevel = self.ui.sldIrLevel.value()
             self.tn.setIrLevel(self.ui.sldIrLevel.value())
 
     def updatePrgbar(self):
@@ -122,11 +124,13 @@ class AlsGui(QtWidgets.QWidget):
     def sbxIrRampIntervalValueChanged(self):
         if(self.tn.connected):
             if(self.ui.sbxIrRampInterval.value()):
+                self.currentIrLevel = 0
                 self.timerUpdateIrLevel.stop()
                 self.timerUpdateIrLevel.setInterval(self.ui.sbxIrRampInterval.value())
                 self.timerUpdateIrLevel.start()
             else:
                 self.timerUpdateIrLevel.stop()
+                self.currentIrLevel = self.ui.sldIrLevel.value()
                 self.tn.setIrLevel(self.ui.sldIrLevel.value())
 
     def sbxSamplingIntervalValueChanged(self):
