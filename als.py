@@ -163,7 +163,6 @@ class AlsTelnet(Telnet):
                     self.alsLastReading = int(re.search('0x[0-9a-f]+', data).group(0), 16)
                     break
         
-    
     def setIrLevel(self, level=0):
         # write irl level, argument is in range 0-10, need multiply 10
         self.write(b'nanit_hwtest irl ' + str(level * 10).encode('ascii') + b'\n')

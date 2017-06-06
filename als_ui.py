@@ -1,13 +1,12 @@
 # -*- coding: utf-8 -*-
 
-# Form implementation generated from reading ui file '.\als.ui'
+# Form implementation generated from reading ui file 'als.ui'
 #
 # Created by: PyQt5 UI code generator 5.6
 #
 # WARNING! All changes made in this file will be lost!
 
 from PyQt5 import QtCore, QtGui, QtWidgets
-from matplotlibwidget import MatplotlibWidget
 
 class Ui_Form(object):
     def setupUi(self, Form):
@@ -51,6 +50,9 @@ class Ui_Form(object):
         self.btnConnect = QtWidgets.QPushButton(Form)
         self.btnConnect.setObjectName("btnConnect")
         self.gridLayout.addWidget(self.btnConnect, 1, 3, 1, 1)
+        self.btnClear = QtWidgets.QPushButton(Form)
+        self.btnClear.setObjectName("btnClear")
+        self.gridLayout.addWidget(self.btnClear, 3, 2, 1, 1)
 
         self.retranslateUi(Form)
         QtCore.QMetaObject.connectSlotsByName(Form)
@@ -65,5 +67,6 @@ class Ui_Form(object):
         self.prgAlsLevel.setFormat(_translate("Form", "%p"))
         self.btnSave.setText(_translate("Form", "Save"))
         self.btnConnect.setText(_translate("Form", "Connect"))
+        self.btnClear.setText(_translate("Form", "Clear"))
 
-
+from matplotlibwidget import MatplotlibWidget

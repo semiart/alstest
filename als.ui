@@ -85,13 +85,20 @@
      </property>
     </widget>
    </item>
+   <item row="3" column="2">
+    <widget class="QPushButton" name="btnClear">
+     <property name="text">
+      <string>Clear</string>
+     </property>
+    </widget>
+   </item>
   </layout>
  </widget>
  <customwidgets>
   <customwidget>
    <class>MatplotlibWidget</class>
    <extends>QGraphicsView</extends>
-   <header>pyqtgraph</header>
+   <header>matplotlibwidget</header>
   </customwidget>
  </customwidgets>
  <resources/>
